@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ProdottoComponent } from './prodotto/prodotto.component';
 
 const routes: Routes = [
   {
@@ -25,6 +26,9 @@ const routes: Routes = [
     loadChildren: () =>
       import('@abp/ng.setting-management').then(m => m.SettingManagementModule.forLazy()),
   },
+  { path: 'def-prodotti', loadChildren: () => import('./prodotti-def/prodotti-def.module').then(m => m.ProdottiDefModule) },
+  { path: 'prodotti', loadChildren: () => import('./prodotti/prodotti.module').then(m => m.ProdottiModule)},
+  {path: 'prodotti/:id', loadChildren: () => import('./prodotto/prodotto.module').then(m => m.ProdottoModule)}
 ];
 
 @NgModule({

@@ -1,0 +1,104 @@
+.Prodotto{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: nowrap;
+}
+.todo{
+    background-color: rgb(167, 198, 204);
+    border-radius: 20px;
+    width: 60vw;
+    margin: 3vh auto;
+}
+.lat{
+    margin-top: 4vh;
+}
+.imgLat{
+    width: 5vw;
+    height: 12vh;
+    object-fit: cover;
+    margin:  0.5vw 0;
+    border-radius: 10px;
+}
+.Imgs{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width: 20vw;
+    overflow: auto;
+    margin: 2vw 0;
+}
+.cont{
+    margin-top: 6vh;
+    width: 15vw;
+    text-align: end;
+    color: black;
+}
+.imgProd{
+    width: 16vw;
+    height: 40vh;
+    object-fit: cover;
+    margin: 0 0.5vw;
+    border-radius: 10px;
+}
+.carta{
+    width: 17vw !important;
+    border: 1px solid lightgray;
+    margin: min(5vh) min(8vw);
+}
+.carta:hover .overlay{
+    bottom: 0;
+    height: 100%;
+}
+.carte{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+.img{
+    height: 405px;
+    object-fit: cover;
+}
+.overlay{
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    right: 0;
+    background-color: hsla(147, 4%, 54%, 0.603);
+    overflow: hidden;
+    width: 100%;
+    cursor: pointer;
+    height: 0;
+    transition: .5s ease;
+}
+.testoOver{
+    white-space: nowrap; 
+    color: black;
+    font-size: 20px;
+    position: absolute;
+    overflow: hidden;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+}
+.numProd{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    background-color: white;
+    width: max(3.5vw);
+    height: max(21px);
+    justify-content: space-between;
+    margin:0 0 0.5vw auto;
+}
+.numProd button{
+    width: 22px;
+    height: 22px;
+    background-color: black;
+    color: white;
+    margin: 0;
+    text-align: center;
+    border: 0;
+}

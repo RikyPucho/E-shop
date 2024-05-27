@@ -1,0 +1,23 @@
+
+
+<h2 style="margin: 2vh 16vw; font-size: 3em; color: black;">
+    Prodotti
+</h2>
+<div class="carte">
+    <ng-container *ngFor="let prodotto of prodotto.items">
+        <div class="card carta" routerLink="/prodotti/{{prodotto.id}}">
+            <img src="" alt=""   id={{prodotto.immagine1}} class="img">
+            <div class="overlay">
+                <h3 class="testoOver">
+                    Visualizza e acquista
+                </h3>
+            </div>
+            <div class="card-body">
+                <h3>{{prodotto.nome}}</h3>
+                <h5>{{prodotto.prezzo | currency:'EUR': true}}</h5>
+                <p>{{prodotto.des}}</p>
+            </div>
+        </div>
+    </ng-container>
+</div>
+    
