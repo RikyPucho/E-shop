@@ -1,0 +1,17 @@
+//inglese
+"Prodotto:00001": "There is already an prodotto with the same name: {Nome}",
+"Permission:Prodotti": "Prodotto Management",
+"Permission:Prodotti.Create": "Creating new Prodotti",
+"Permission:Prodotti.Edit": "Editing the Prodotti",
+"Permission:Prodotti.Delete": "Deleting the Prodotti",
+
+
+//italiano
+"Prodotto:00001": "Esiste già un prodotto con lo stesso nome: {Nome}",
+"Permission:Prodotti": "Prodotto Management",
+"Permission:Prodotti.Create": "Creare Prodotti",
+"Permission:Prodotti.Edit": "Modificare Prodotti",
+"Permission:Prodotti.Delete": "Eliminare Prodotti",
+
+
+

@@ -1,0 +1,10 @@
+Eshop
+Prodotto
+Prodotti
+6
+string Nome
+string? Des
+float Prezzo
+string Immagine1
+string Immagine2
+string Immagine3

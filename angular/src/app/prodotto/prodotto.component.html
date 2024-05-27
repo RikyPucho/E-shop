@@ -1,0 +1,57 @@
+<div class="todo">
+    <div class="Prodotto">
+        <div class="lat">
+            <img src="" class="d-block imgLat" alt="" name={{selectedProdotto.immagine1}} (click)="ChangeImg(1)">
+            <ng-container *ngIf="selectedProdotto.immagine2!=''">
+                <img src="" class="d-block imgLat" alt="" name={{selectedProdotto.immagine2}} (click)="ChangeImg(2)">
+            </ng-container>
+            <ng-container *ngIf="selectedProdotto.immagine3!=''">
+                <img src="" class="d-block imgLat" alt="" name={{selectedProdotto.immagine3}} (click)="ChangeImg(3)">
+            </ng-container>
+        </div>
+        <div class="Imgs">
+            <ng-container *ngIf="immag == 1">
+                <img src="" class="d-block imgProd" alt="" name={{selectedProdotto.immagine1}}>
+            </ng-container>
+            <ng-container *ngIf="selectedProdotto.immagine2!='' && immag == 2" >
+                <img src="" class="d-block imgProd" alt="" name={{selectedProdotto.immagine2}}>
+            </ng-container>
+            <ng-container *ngIf="selectedProdotto.immagine3!='' && immag == 3">
+                <img src="" class="d-block imgProd" alt="" name={{selectedProdotto.immagine3}}>
+            </ng-container>
+        </div>
+        <div class="cont" *ngIf="selectedProdotto.id">
+            <h1>{{selectedProdotto.nome}}</h1>
+            <h3>{{selectedProdotto.prezzo | currency:'EUR':true}}</h3>
+            <p>{{selectedProdotto.des}}</p>
+            <div class="numProd">
+                <button (click)="ChangeNum(numProd-1)">-</button><p>{{numProd}}</p><button (click)="ChangeNum(numProd+1)">+</button>
+            </div>
+            <button class="btn" style="background-color: white;">Aggiungi al carrello</button>
+        </div>
+    </div>
+</div>
+
+<h2 style="margin: 5vh 16vw 2vh; font-size: 3em; color: black;">
+    Altri prodotti
+</h2>
+<div class="carte">
+    <ng-container *ngFor="let prodotto of prodotto.items;">
+        <ng-container *ngIf="prodotto.id != selectedProdotto.id">
+
+            <div class="card carta" routerLink="/prodotti/{{prodotto.id}}" (click)="RicaricaFoto(); ChangeImg(1); ChangeNum(1)">
+                <img src="" alt=""   name={{prodotto.immagine1}} class="img">
+                <div class="overlay">
+                    <h3 class="testoOver">
+                        Visualizza e acquista
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <h3>{{prodotto.nome}}</h3>
+                    <h5>{{prodotto.prezzo | currency:'EUR': true}}</h5>
+                    <p>{{prodotto.des}}</p>
+                </div>
+            </div>
+        </ng-container>
+    </ng-container>
+</div>

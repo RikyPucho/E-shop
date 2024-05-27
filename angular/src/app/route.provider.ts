@@ -15,6 +15,21 @@ function configureRoutes(routesService: RoutesService) {
         order: 1,
         layout: eLayoutType.application,
       },
+      {
+        path: '/def-prodotti',
+        name: 'Definizione prodotti',
+        iconClass: 'fas fa-',
+        order: 2,
+        layout: eLayoutType.application,
+        requiredPolicy: 'Eshop.Prodotti'
+      },
+      {
+        path: '/prodotti',
+        name: 'Prodotti',
+        iconClass: 'fas fa-',
+        order: 3,
+        layout: eLayoutType.application,
+      },
     ]);
   };
 }

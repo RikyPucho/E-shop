@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Eshop.MultiTenancy;
 using Volo.Abp.AuditLogging;
@@ -14,6 +14,7 @@ using Volo.Abp.PermissionManagement.Identity;
 using Volo.Abp.PermissionManagement.OpenIddict;
 using Volo.Abp.SettingManagement;
 using Volo.Abp.TenantManagement;
+using Volo.Abp.BlobStoring.Database;
 
 namespace Eshop;
 
@@ -30,7 +31,8 @@ namespace Eshop;
     typeof(AbpTenantManagementDomainModule),
     typeof(AbpEmailingModule)
 )]
-public class EshopDomainModule : AbpModule
+[DependsOn(typeof(BlobStoringDatabaseDomainModule))]
+    public class EshopDomainModule : AbpModule
 {
     public override void ConfigureServices(ServiceConfigurationContext context)
     {

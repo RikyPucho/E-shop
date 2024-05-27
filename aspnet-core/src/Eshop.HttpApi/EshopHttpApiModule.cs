@@ -8,6 +8,7 @@ using Volo.Abp.Modularity;
 using Volo.Abp.PermissionManagement.HttpApi;
 using Volo.Abp.SettingManagement;
 using Volo.Abp.TenantManagement;
+using Volo.Abp.BlobStoring;
 
 namespace Eshop;
 
@@ -20,6 +21,7 @@ namespace Eshop;
     typeof(AbpFeatureManagementHttpApiModule),
     typeof(AbpSettingManagementHttpApiModule)
     )]
+[DependsOn(typeof(AbpBlobStoringModule))]
 public class EshopHttpApiModule : AbpModule
 {
     public override void ConfigureServices(ServiceConfigurationContext context)

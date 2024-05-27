@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Eshop.Prodotti;
+using Microsoft.EntityFrameworkCore;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.EntityFrameworkCore;
+using Volo.Abp.EntityFrameworkCore.Modeling;
 using Volo.Abp.FeatureManagement.EntityFrameworkCore;
 using Volo.Abp.Identity;
 using Volo.Abp.Identity.EntityFrameworkCore;
@@ -12,6 +14,7 @@ using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
+using Volo.Abp.BlobStoring.Database.EntityFrameworkCore;
 
 namespace Eshop.EntityFrameworkCore;
 
@@ -24,7 +27,7 @@ public class EshopDbContext :
     ITenantManagementDbContext
 {
     /* Add DbSet properties for your Aggregate Roots / Entities here. */
-
+    public DbSet<Prodotto> Prodotti { get; set; }
     #region Entities from the modules
 
     /* Notice: We only implemented IIdentityDbContext and ITenantManagementDbContext
@@ -73,6 +76,7 @@ public class EshopDbContext :
         builder.ConfigureOpenIddict();
         builder.ConfigureFeatureManagement();
         builder.ConfigureTenantManagement();
+        builder.ConfigureBlobStoring();
 
         /* Configure your own tables/entities inside here */
 
@@ -82,5 +86,16 @@ public class EshopDbContext :
         //    b.ConfigureByConvention(); //auto configure for the base class props
         //    //...
         //});
-    }
+        builder.Entity<Prodotto>(b =>
+        {
+            b.ToTable(EshopConsts.DbTablePrefix + "Prodotti",
+                EshopConsts.DbSchema);
+            b.ConfigureByConvention();
+            b.Property(x => x.Nome)
+                .IsRequired()
+                .HasMaxLength(ProdottoConsts.MaxNameLength);
+            b.HasIndex(x => x.Nome);
+        });
+        builder.ConfigureBlobStoring();
+        }
 }
