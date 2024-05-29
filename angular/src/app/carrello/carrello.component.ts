@@ -44,6 +44,7 @@ export class CarrelloComponent implements OnInit, DoCheck{
           this.selectedCarrello = car;
           this.prodotti = this.selectedCarrello.prodottiNames;
           this.RicaricaFoto();
+          this.calcolaTot()
         });
         this.altroGiro=false;
       }
@@ -81,16 +82,32 @@ export class CarrelloComponent implements OnInit, DoCheck{
     this.ListaProva = this.selectedCarrello.prodottiNames
   }
   ChangeNum(num: number, ind:number){
-    this.selectedCarrello.prodottiNum[ind] = num
+    this.selectedCarrello.prodottiNum[ind] = num;
+    this.calcolaTot()
   }
   deleteProd(ind : number){
     this.selectedCarrello.prodottiNames.splice(ind, 1)
     this.selectedCarrello.prodottiNum.splice(ind, 1)
-    console.log(this.selectedCarrello.prodottiNames)
-    console.log(this.selectedCarrello.prodottiNum)
-    return
+    this.Salva();
+  }
+  modifica(ind: number, id: string, num: number){
+    var name = id.toLowerCase()
+    this.selectedCarrello.prodottiNames.splice(ind, 1);
+    this.selectedCarrello.prodottiNum.splice(ind, 1);
+    this.selectedCarrello.prodottiNames.push(name);
+    this.selectedCarrello.prodottiNum.push(num);
+    this.Salva()
+  }
+  Salva(){
     this.carrelloService.update(this.selectedCarrello.id, {userId: this.selectedCarrello.userId, numDif: this.selectedCarrello.numDif, prodottiNames: this.selectedCarrello.prodottiNames, prodottiNum: this.selectedCarrello.prodottiNum}).subscribe(()=>{
       this.getCarUser();
     })
+  }
+  tot:number;
+  calcolaTot(){
+    this.tot = 0;
+    for(var i = 0; i < this.selectedCarrello.prodottiPrezzi.length; i++){
+      this.tot +=this.selectedCarrello.prodottiPrezzi[i] * this.selectedCarrello.prodottiNum[i]
+    }
   }
 }

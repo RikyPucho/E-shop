@@ -4,7 +4,7 @@ import { ProdottoService, ProdottoDto } from '@proxy/prodotti';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ConfirmationService, Confirmation } from '@abp/ng.theme.shared';
 import { ImmaginiService } from '@proxy/controllers';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ControlliCarrelloService } from 'src/service/controlli-carrello.service';
 import { CarrelloDto, CarrelloService } from '@proxy/carrelli';
 @Component({
@@ -32,7 +32,8 @@ export class ProdottoComponent implements OnInit, DoCheck {
     private route: ActivatedRoute,
     private config: ConfigStateService,
     private controlService: ControlliCarrelloService,
-    private carrelloService: CarrelloService
+    private carrelloService: CarrelloService,
+    private router: Router
   ) {}
 
   ListaProva: any;
@@ -144,7 +145,7 @@ export class ProdottoComponent implements OnInit, DoCheck {
     });
     this.RicaricaFoto();
   }
-
+  option: Partial<Confirmation.Options> = {yesText: 'Ok', cancelText: 'Visualizza carrello'}
   AddCarrello(){
     if(this.selectedCarrello.prodottiNames== null){
       this.selectedCarrello.prodottiNames = []
@@ -161,7 +162,11 @@ export class ProdottoComponent implements OnInit, DoCheck {
     this.selectedCarrello.prodottiNum.push(this.numProd);
     console.log(this.selectedCarrello)
     this.carrelloService.update(this.selectedCarrello.id, {userId:this.selectedCarrello.userId, numDif:this.selectedCarrello.numDif, prodottiNames: this.selectedCarrello.prodottiNames, prodottiNum: this.selectedCarrello.prodottiNum}).subscribe(()=>{
-      this.confirmation.info(this.numProd +' '+ this.selectedProdotto.nome+ (this.numProd == 1 ? ' aggiunto': ' aggiunti')+' al carrello', 'Carrello')
+      this.confirmation.info(this.numProd +(this.numProd == 1 ? ' prodotto: ': ' prodotti: ')+'"'+ this.selectedProdotto.nome+ (this.numProd == 1 ? '" aggiunto': '" aggiunti')+' al carrello', 'Carrello', this.option).subscribe(status=>{
+        if(status== Confirmation.Status.reject){
+          this.router.navigate(['/carrello']);
+        }
+      })
     })
   }
 }

@@ -18,7 +18,7 @@ function configureRoutes(routesService: RoutesService) {
       {
         path: '/carrello',
         name: 'Carrello',
-        iconClass: 'fas fa-',
+        iconClass: 'fas fa-shopping-cart',
         order: 2,
         layout: eLayoutType.application,
         requiredPolicy: 'Eshop.Carrelli'
@@ -33,7 +33,7 @@ function configureRoutes(routesService: RoutesService) {
       {
         path: '/def-prodotti',
         name: 'Definizione prodotti',
-        iconClass: 'fas fa-',
+        iconClass: 'fas fa-plus',
         order: 4,
         layout: eLayoutType.application,
         requiredPolicy: 'Eshop.Prodotti'
