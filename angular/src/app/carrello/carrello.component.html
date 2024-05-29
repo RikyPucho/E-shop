@@ -1,0 +1,17 @@
+<h1 style="margin: 2vh auto auto 5vw;color: black;">Carrello</h1>
+<ng-container *ngFor="let prod of prodotti; index as i">
+    <div class="Prod">
+        <img src="" alt="" id={{selectedCarrello.immagini1[i]}} class="img">
+        <div class="cont">
+            <h2>{{selectedCarrello.prodottiNomi[i]}}</h2>
+            <h3>{{selectedCarrello.prodottiPrezzi[i] | currency:'EUR':true}}</h3>
+            <div class="numProd">
+                <button (click)="ChangeNum(selectedCarrello.prodottiNum[i]-1, i)">-</button><p>{{selectedCarrello.prodottiNum[i]}}</p><button (click)="ChangeNum(selectedCarrello.prodottiNum[i]+1, i)">+</button>
+            </div>
+            <h4>Totale: {{selectedCarrello.prodottiPrezzi[i] * selectedCarrello.prodottiNum[i] | currency:'EUR':true}}</h4>
+        </div>
+        <div class="cestino">
+            <i class="fa fa-trash" style="font-size: 2rem;cursor: pointer;" (click)="deleteProd(i)"></i>
+        </div>
+    </div>
+</ng-container>

@@ -16,12 +16,12 @@ function configureRoutes(routesService: RoutesService) {
         layout: eLayoutType.application,
       },
       {
-        path: '/def-prodotti',
-        name: 'Definizione prodotti',
+        path: '/carrello',
+        name: 'Carrello',
         iconClass: 'fas fa-',
         order: 2,
         layout: eLayoutType.application,
-        requiredPolicy: 'Eshop.Prodotti'
+        requiredPolicy: 'Eshop.Carrelli'
       },
       {
         path: '/prodotti',
@@ -29,6 +29,14 @@ function configureRoutes(routesService: RoutesService) {
         iconClass: 'fas fa-',
         order: 3,
         layout: eLayoutType.application,
+      },
+      {
+        path: '/def-prodotti',
+        name: 'Definizione prodotti',
+        iconClass: 'fas fa-',
+        order: 4,
+        layout: eLayoutType.application,
+        requiredPolicy: 'Eshop.Prodotti'
       },
     ]);
   };

@@ -15,6 +15,11 @@ public class EshopPermissionDefinitionProvider : PermissionDefinitionProvider
         prodottiPermission.AddChild(EshopPermissions.Prodotti.Create, L("Permission:Prodotti.Create"));
         prodottiPermission.AddChild(EshopPermissions.Prodotti.Edit, L("Permission:Prodotti.Edit"));
         prodottiPermission.AddChild(EshopPermissions.Prodotti.Delete, L("Permission:Prodotti.Delete"));
+
+        var carrelliPermission = EshopGroup.AddPermission(EshopPermissions.Carrelli.Default, L("Permission:Carrelli"));
+        carrelliPermission.AddChild(EshopPermissions.Carrelli.Create, L("Permission:Carrelli.Create"));
+        carrelliPermission.AddChild(EshopPermissions.Carrelli.Edit, L("Permission:Carrelli.Edit"));
+        carrelliPermission.AddChild(EshopPermissions.Carrelli.Delete, L("Permission:Carrelli.Delete"));
     }
 
     private static LocalizableString L(string name)

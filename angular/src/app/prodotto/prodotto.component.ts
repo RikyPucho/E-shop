@@ -1,10 +1,12 @@
 import { Component, DoCheck, OnInit } from '@angular/core';
-import { ListService, PagedResultDto } from '@abp/ng.core';
+import { ConfigStateService, ListService, PagedResultDto } from '@abp/ng.core';
 import { ProdottoService, ProdottoDto } from '@proxy/prodotti';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ConfirmationService, Confirmation } from '@abp/ng.theme.shared';
 import { ImmaginiService } from '@proxy/controllers';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ControlliCarrelloService } from 'src/service/controlli-carrello.service';
+import { CarrelloDto, CarrelloService } from '@proxy/carrelli';
 @Component({
   selector: 'app-prodotto',
   templateUrl: './prodotto.component.html',
@@ -19,6 +21,7 @@ export class ProdottoComponent implements OnInit, DoCheck {
   form: FormGroup;
 
   selectedProdotto = {} as ProdottoDto;
+  selectedCarrello = {} as CarrelloDto;
 
   constructor(
     public readonly list: ListService,
@@ -26,7 +29,10 @@ export class ProdottoComponent implements OnInit, DoCheck {
     private fb: FormBuilder,
     private confirmation: ConfirmationService,
     private immagineService: ImmaginiService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private config: ConfigStateService,
+    private controlService: ControlliCarrelloService,
+    private carrelloService: CarrelloService
   ) {}
 
   ListaProva: any;
@@ -36,7 +42,6 @@ export class ProdottoComponent implements OnInit, DoCheck {
     const sleep = (ms) => new Promise(r => setTimeout(r, ms));
     await sleep(100);
     for(let value of this.prodotto.items){
-      console.log(value.nome)
         if(value.immagine1 != '' && value.immagine1!=null){
           this.immagineService.getImage(value.immagine1).subscribe(function (imageFile) {
             var src = "data:image/png;base64," + imageFile;
@@ -85,7 +90,7 @@ export class ProdottoComponent implements OnInit, DoCheck {
     this.giro = true
     this.ListaProva = this.prodotto.items
   }
-  
+  altroGiro:boolean
   ngDoCheck(): void {
     if(this.giro){
       //controllo se la lista dei curriculum cambia così ricarico le immagini
@@ -97,6 +102,14 @@ export class ProdottoComponent implements OnInit, DoCheck {
       //   this.getCurriculums();
       //   this.RicaricaFoto();
       // }
+    }
+    if(this.altroGiro){
+      if(this.controlService.id!=undefined){
+        this.carrelloService.get(this.controlService.id).subscribe(car=>{
+          this.selectedCarrello = car;
+        });
+        this.altroGiro=false;
+      }
     }
   }
   ChangeNum(num: number){
@@ -110,15 +123,18 @@ export class ProdottoComponent implements OnInit, DoCheck {
   }
   immag: number;
   numProd: number;
+  CarrelloId: string;
   ngOnInit(): void {
+    this.altroGiro =true;
+    this.config.getOne$("currentUser").subscribe(async currentUser => {
+      this.controlService.controlloCarrello(currentUser.id);
+    })
     this.numProd = 1
     this.immag = 1
     this.route.paramMap.subscribe((param: ParamMap)=>{
       const id = (param.get('id')!)
-      console.log(id)
       this.prodottoService.get(id).subscribe((prod)=>{
         this.selectedProdotto = prod;
-        console.log(prod)
       })
     })
     const prodottoStreamCreator = (query) => this.prodottoService.getList(query);
@@ -127,5 +143,25 @@ export class ProdottoComponent implements OnInit, DoCheck {
       this.prodotto = response;
     });
     this.RicaricaFoto();
+  }
+
+  AddCarrello(){
+    if(this.selectedCarrello.prodottiNames== null){
+      this.selectedCarrello.prodottiNames = []
+    }
+    if(this.selectedCarrello.prodottiNum == null){
+      this.selectedCarrello.prodottiNum = []
+    }
+    if(this.selectedCarrello.prodottiNames.includes(this.selectedProdotto.id.toUpperCase())){
+      var ind = this.selectedCarrello.prodottiNames.indexOf(this.selectedProdotto.id.toUpperCase())
+      this.selectedCarrello.prodottiNames.splice(ind, 1)
+      this.selectedCarrello.prodottiNum.splice(ind, 1)
+    }
+    this.selectedCarrello.prodottiNames.push(this.selectedProdotto.id);
+    this.selectedCarrello.prodottiNum.push(this.numProd);
+    console.log(this.selectedCarrello)
+    this.carrelloService.update(this.selectedCarrello.id, {userId:this.selectedCarrello.userId, numDif:this.selectedCarrello.numDif, prodottiNames: this.selectedCarrello.prodottiNames, prodottiNum: this.selectedCarrello.prodottiNum}).subscribe(()=>{
+      this.confirmation.info(this.numProd +' '+ this.selectedProdotto.nome+ (this.numProd == 1 ? ' aggiunto': ' aggiunti')+' al carrello', 'Carrello')
+    })
   }
 }
