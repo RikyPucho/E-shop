@@ -33,18 +33,10 @@ public class Carrello : FullAuditedAggregateRoot<Guid>
     public async void AddProd(Guid id, int num)
     {
         Check.NotNull(id, nameof(id));
-        if(IsInProd(id))
+        if (IsInProd(id))
         {
-            var pro = Prodotti.Where(x => x.IdProdotto == id).Where(x => x.IdCarrello == Id);
-            var list = pro.ToList();
-            if (list.LongCount() == 1 && list[0].NumProdotto == num)
-            {
-                return;
-            }
-            else
-            {
-                RemoveProd(id);
-            }
+            //return;
+            RemoveProd(id);
         }
         Prodotti.Add(new Relazione(idcarrello: Id, idprodotto: id, numprodotto: num));
     }

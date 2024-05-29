@@ -71,7 +71,6 @@ export class CarrelloComponent implements OnInit, DoCheck{
     const sleep = (ms) => new Promise(r => setTimeout(r, ms));
     await sleep(100);
     for(let ima of this.selectedCarrello.immagini1){  
-      console.log(ima)
       this.immagineService.getImage(ima).subscribe(function (imageFile) {
         var src = "data:image/png;base64," + imageFile;
         this.imgElement = document.getElementById(ima) as HTMLImageElement;
@@ -87,6 +86,9 @@ export class CarrelloComponent implements OnInit, DoCheck{
   deleteProd(ind : number){
     this.selectedCarrello.prodottiNames.splice(ind, 1)
     this.selectedCarrello.prodottiNum.splice(ind, 1)
+    console.log(this.selectedCarrello.prodottiNames)
+    console.log(this.selectedCarrello.prodottiNum)
+    return
     this.carrelloService.update(this.selectedCarrello.id, {userId: this.selectedCarrello.userId, numDif: this.selectedCarrello.numDif, prodottiNames: this.selectedCarrello.prodottiNames, prodottiNum: this.selectedCarrello.prodottiNum}).subscribe(()=>{
       this.getCarUser();
     })

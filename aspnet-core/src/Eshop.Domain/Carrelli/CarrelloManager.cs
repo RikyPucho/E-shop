@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Eshop.Prodotti;
@@ -77,7 +78,11 @@ public class CarrelloManager : DomainService
 
         for (var i =0; i<prodottiIds.LongCount(); i++)
         {
-            car.AddProd(prodottiIds[i], ProdottiNum[i]);
+            var inde = prodottiNames.FindIndex(x => x.Contains(prodottiIds[i].ToString()));
+            if(inde != -1)
+            {
+                car.AddProd(prodottiIds[i], ProdottiNum[inde]);
+            }
         }
     }
 }
