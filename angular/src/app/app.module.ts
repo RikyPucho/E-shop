@@ -41,7 +41,7 @@ import { ProdottoModule } from './prodotto/prodotto.module';
     ThemeLeptonXModule.forRoot(),
     SideMenuLayoutModule.forRoot(),
     AccountLayoutModule.forRoot(),
-    ProdottoModule
+    ProdottoModule,
   ],
   declarations: [AppComponent],
   providers: [APP_ROUTE_PROVIDER],

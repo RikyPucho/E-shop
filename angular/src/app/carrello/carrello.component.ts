@@ -2,10 +2,12 @@ import { ConfigStateService, ListService } from '@abp/ng.core';
 import { ConfirmationService } from '@abp/ng.theme.shared';
 import { Component, DoCheck, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { CarrelloDto, CarrelloService } from '@proxy/carrelli';
 import { ImmaginiService } from '@proxy/controllers';
 import { ProdottoService } from '@proxy/prodotti';
 import { ControlliCarrelloService } from 'src/service/controlli-carrello.service';
+import { OrdineCarrelloService } from 'src/service/ordine-carrello.service';
 
 @Component({
   selector: 'app-carrello',
@@ -28,7 +30,9 @@ export class CarrelloComponent implements OnInit, DoCheck{
     private immagineService: ImmaginiService,
     private carrelloService: CarrelloService,
     private config: ConfigStateService,
-    private controlService: ControlliCarrelloService
+    private controlService: ControlliCarrelloService,
+    private router: Router,
+    private ordineSer: OrdineCarrelloService
   ) {}
   ngDoCheck(): void {
     if(this.giro){
@@ -109,5 +113,10 @@ export class CarrelloComponent implements OnInit, DoCheck{
     for(var i = 0; i < this.selectedCarrello.prodottiPrezzi.length; i++){
       this.tot +=this.selectedCarrello.prodottiPrezzi[i] * this.selectedCarrello.prodottiNum[i]
     }
+  }
+  ordine(){
+    this.ordineSer.setOrdine(this.selectedCarrello.prodottiNames, this.selectedCarrello.prodottiNomi, this.selectedCarrello.prodottiNum, this.selectedCarrello.prodottiPrezzi, this.tot)
+    this.ordineSer.setCarrelloId(this.selectedCarrello.id, this.selectedCarrello.userId)
+    this.router.navigate(['/ordine'])
   }
 }

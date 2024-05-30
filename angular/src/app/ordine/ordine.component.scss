@@ -1,0 +1,31 @@
+.ordine{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    color: black;
+}
+.tot{
+    margin: 5vh auto 5vh 0;
+    position:fixed;
+    right: 3vw;
+    background-color: lightgray;
+    width: 20vw;
+    height: fit-content;
+    border-radius: 20px;
+}
+.cont{
+    margin: 5vh 3vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.form{
+    width: 35vw;
+    margin: 0 6vw 5vh 6vw;
+}
+.form-group{
+    margin-top: 2vh;
+}
+.form-control{
+    border-color: black;
+}

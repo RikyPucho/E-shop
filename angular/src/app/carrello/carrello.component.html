@@ -27,7 +27,7 @@
                 <p>{{selectedCarrello.prodottiNomi[i]}} ({{selectedCarrello.prodottiPrezzi[i] | currency:'EUR'}}) * {{selectedCarrello.prodottiNum[i]}} = {{selectedCarrello.prodottiPrezzi[i] * selectedCarrello.prodottiNum[i] | currency:'EUR'}}</p>
             </ng-container>
             <h4>Totale carrello: {{tot | currency:'EUR'}}</h4>
-            <button class="btn btn-dark" style="margin-top: 2vh;">Acquista</button>
+            <button class="btn btn-dark" style="margin-top: 2vh;" (click)="ordine()">Procedi all'ordine</button>
         </div>
     </div>
     

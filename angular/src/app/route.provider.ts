@@ -26,7 +26,7 @@ function configureRoutes(routesService: RoutesService) {
       {
         path: '/prodotti',
         name: 'Prodotti',
-        iconClass: 'fas fa-',
+        iconClass: 'fas fa-tag',
         order: 3,
         layout: eLayoutType.application,
       },
