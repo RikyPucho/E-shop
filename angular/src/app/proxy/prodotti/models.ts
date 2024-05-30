@@ -4,9 +4,9 @@ export interface CreateProdottoDto {
   nome: string;
   des?: string;
   prezzo: number;
-  immagine1: string;
-  immagine2: string;
-  immagine3: string;
+  immagine1?: string;
+  immagine2?: string;
+  immagine3?: string;
 }
 
 export interface GetProdottoListDto extends PagedAndSortedResultRequestDto {
@@ -26,7 +26,16 @@ export interface UpdateProdottoDto {
   nome: string;
   des?: string;
   prezzo: number;
-  immagine1: string;
-  immagine2: string;
-  immagine3: string;
+  immagine1?: string;
+  immagine2?: string;
+  immagine3?: string;
+}
+
+export interface ProdottoLookupDto extends EntityDto<string> {
+  nome?: string;
+  des?: string;
+  prezzo: number;
+  immagine1?: string;
+  immagine2?: string;
+  immagine3?: string;
 }

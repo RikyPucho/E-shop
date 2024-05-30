@@ -24,6 +24,172 @@ namespace Eshop.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Eshop.Carrelli.Carrello", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)")
+                        .HasColumnName("ConcurrencyStamp");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("DeleterId");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DeletionTime");
+
+                    b.Property<string>("ExtraProperties")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ExtraProperties");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false)
+                        .HasColumnName("IsDeleted");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("LastModifierId");
+
+                    b.Property<int>("NumDif")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AppCarrelli", (string)null);
+                });
+
+            modelBuilder.Entity("Eshop.Ordini.Ordine", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Cap")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Citta")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Cognome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)")
+                        .HasColumnName("ConcurrencyStamp");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("DeleterId");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DeletionTime");
+
+                    b.Property<string>("ExtraProperties")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ExtraProperties");
+
+                    b.Property<string>("Indrizzo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false)
+                        .HasColumnName("IsDeleted");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("LastModifierId");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<float>("Prezzo")
+                        .HasColumnType("real");
+
+                    b.Property<string>("Provincia")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Stato")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Telefono")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AppOrdini", (string)null);
+                });
+
+            modelBuilder.Entity("Eshop.OrdiniProdotti.OrdineProdotti", b =>
+                {
+                    b.Property<Guid>("OrdineId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProdottoId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("ProdottoNum")
+                        .HasColumnType("int");
+
+                    b.HasKey("OrdineId", "ProdottoId");
+
+                    b.HasIndex("ProdottoId");
+
+                    b.HasIndex("OrdineId", "ProdottoId");
+
+                    b.ToTable("AppOrdineProdotti", (string)null);
+                });
+
             modelBuilder.Entity("Eshop.Prodotti.Prodotto", b =>
                 {
                     b.Property<Guid>("Id")
@@ -100,6 +266,26 @@ namespace Eshop.Migrations
                     b.HasIndex("Nome");
 
                     b.ToTable("AppProdotti", (string)null);
+                });
+
+            modelBuilder.Entity("Eshop.Relazioni.Relazione", b =>
+                {
+                    b.Property<Guid>("IdCarrello")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("IdProdotto")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("NumProdotto")
+                        .HasColumnType("int");
+
+                    b.HasKey("IdCarrello", "IdProdotto");
+
+                    b.HasIndex("IdProdotto");
+
+                    b.HasIndex("IdCarrello", "IdProdotto");
+
+                    b.ToTable("AppRelazioni", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLog", b =>
@@ -1924,6 +2110,36 @@ namespace Eshop.Migrations
                     b.ToTable("AbpTenantConnectionStrings", (string)null);
                 });
 
+            modelBuilder.Entity("Eshop.OrdiniProdotti.OrdineProdotti", b =>
+                {
+                    b.HasOne("Eshop.Ordini.Ordine", null)
+                        .WithMany("Prodotti")
+                        .HasForeignKey("OrdineId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Eshop.Prodotti.Prodotto", null)
+                        .WithMany()
+                        .HasForeignKey("ProdottoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Eshop.Relazioni.Relazione", b =>
+                {
+                    b.HasOne("Eshop.Carrelli.Carrello", null)
+                        .WithMany("Prodotti")
+                        .HasForeignKey("IdCarrello")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Eshop.Prodotti.Prodotto", null)
+                        .WithMany()
+                        .HasForeignKey("IdProdotto")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLogAction", b =>
                 {
                     b.HasOne("Volo.Abp.AuditLogging.AuditLog", null)
@@ -2073,6 +2289,16 @@ namespace Eshop.Migrations
                         .HasForeignKey("TenantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Eshop.Carrelli.Carrello", b =>
+                {
+                    b.Navigation("Prodotti");
+                });
+
+            modelBuilder.Entity("Eshop.Ordini.Ordine", b =>
+                {
+                    b.Navigation("Prodotti");
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLog", b =>

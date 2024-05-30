@@ -15,6 +15,10 @@ using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
 using Volo.Abp.BlobStoring.Database.EntityFrameworkCore;
+using Eshop.Carrelli;
+using Eshop.Relazioni;
+using Eshop.Ordini;
+using Eshop.OrdiniProdotti;
 
 namespace Eshop.EntityFrameworkCore;
 
@@ -28,6 +32,8 @@ public class EshopDbContext :
 {
     /* Add DbSet properties for your Aggregate Roots / Entities here. */
     public DbSet<Prodotto> Prodotti { get; set; }
+    public DbSet<Carrello> Carrelli { get; set; }
+    public DbSet<Ordine> Ordini { get; set; }
     #region Entities from the modules
 
     /* Notice: We only implemented IIdentityDbContext and ITenantManagementDbContext
@@ -96,6 +102,50 @@ public class EshopDbContext :
                 .HasMaxLength(ProdottoConsts.MaxNameLength);
             b.HasIndex(x => x.Nome);
         });
-        builder.ConfigureBlobStoring();
-        }
+        builder.Entity<Carrello>(b =>
+        {
+            b.ToTable(EshopConsts.DbTablePrefix + "Carrelli",
+                EshopConsts.DbSchema);
+            b.ConfigureByConvention();
+
+            b.HasMany(x => x.Prodotti).WithOne().HasForeignKey(x => x.IdCarrello).IsRequired();
+        });
+        builder.Entity<Relazione>(b =>
+        {
+            b.ToTable(EshopConsts.DbTablePrefix + "Relazioni",
+                EshopConsts.DbSchema);
+            b.ConfigureByConvention();
+
+            b.HasKey(x => new { x.IdCarrello, x.IdProdotto });
+
+            b.HasOne<Carrello>().WithMany(x => x.Prodotti).HasForeignKey(x => x.IdCarrello).IsRequired();
+            b.HasOne<Prodotto>().WithMany().HasForeignKey(x => x.IdProdotto).IsRequired();
+
+            b.HasIndex(x => new { x.IdCarrello, x.IdProdotto });
+        });
+
+        builder.Entity<Ordine>(b =>
+        {
+            b.ToTable(EshopConsts.DbTablePrefix + "Ordini",
+                EshopConsts.DbSchema);
+            b.ConfigureByConvention();
+
+            b.Property(x => x.Nome)
+            .HasMaxLength(30).IsRequired();
+            b.HasMany(x => x.Prodotti).WithOne().HasForeignKey(x => x.OrdineId).IsRequired();
+        });
+        builder.Entity<OrdineProdotti>(b =>
+        {
+            b.ToTable(EshopConsts.DbTablePrefix + "OrdineProdotti",
+               EshopConsts.DbSchema);
+            b.ConfigureByConvention();
+
+            b.HasKey(x => new { x.OrdineId, x.ProdottoId });
+
+            b.HasOne<Ordine>().WithMany(x => x.Prodotti).HasForeignKey(x => x.OrdineId).IsRequired();
+            b.HasOne<Prodotto>().WithMany().HasForeignKey(x => x.ProdottoId).IsRequired();
+
+            b.HasIndex(x => new { x.OrdineId, x.ProdottoId });
+        });
+    }
 }

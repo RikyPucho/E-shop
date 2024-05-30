@@ -1,0 +1,49 @@
+<div style="margin-top: 2vh; color: black; margin-left: 6vw;">
+    <h1>
+        Compila il modulo per procedere all'ordine
+    </h1>
+</div>
+<div class="ordine">
+    <div class="form">
+        <form [formGroup]="form">
+            <div class="form-group">
+                <label for="nome">Nome <span>*</span></label>
+                <input type="text" class="form-control" formControlName="nome" placeholder="Nome">
+            </div>
+            <div class="form-group">
+                <label for="nome">Cognome <span>*</span></label>
+                <input type="text" class="form-control" formControlName="cognome" placeholder="Cognome">
+            </div>
+            <div class="form-group">
+                <label for="nome">Telefono <span>*</span></label>
+                <input type="tel" class="form-control" formControlName="telefono" placeholder="123 4567890">
+            </div>
+            <div class="form-group">
+                <label for="nome">Provincia <span>*</span></label>
+                <input type="text" class="form-control" formControlName="provincia" placeholder="Provincia">
+            </div>
+            <div class="form-group">
+                <label for="nome">Indirizzo <span>*</span></label>
+                <input type="text" class="form-control" formControlName="indrizzo" placeholder="Via xxx 1">
+            </div>
+            <div class="form-group">
+                <label for="nome">CAP <span>*</span></label>
+                <input type="text" class="form-control" formControlName="cap" min="5" max="5" placeholder="XXXXX">
+            </div>
+            <div class="form-group">
+                <label for="nome">Città <span>*</span></label>
+                <input type="text" class="form-control" formControlName="citta" placeholder="Città">
+            </div>
+            <button class="btn btn-dark" (click)="Save()" style="margin-top: 2vh; width: 8vw;">Ordina</button>
+        </form>
+    </div>
+    <div class="tot">
+        <div class="cont">
+            <h1>Ordine</h1>
+            <ng-container *ngFor="let prod of form.get('prodottiNames').value; index as i">
+                <p>{{form.get('prodottiNomi').value[i]}} ({{form.get('prodottiPrezzi').value[i] | currency:'EUR'}}) * {{form.get('prodottiNum').value[i]}} = {{form.get('prodottiPrezzi').value[i] * form.get('prodottiNum').value[i] | currency:'EUR'}}</p>
+            </ng-container>
+            <h4>Totale ordine: {{form.get('prezzo').value | currency:'EUR'}}</h4>
+        </div>
+    </div>
+</div>

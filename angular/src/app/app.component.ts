@@ -1,3 +1,6 @@
+import { ToolbarComponent } from '@abp/ng.components/extensible';
+import { ReplaceableComponentsService } from '@abp/ng.core';
+import { eThemeLeptonXComponents } from '@abp/ng.theme.lepton-x';
 import { Component } from '@angular/core';
 
 @Component({
@@ -8,4 +11,5 @@ import { Component } from '@angular/core';
     <abp-internet-status></abp-internet-status>
   `,
 })
-export class AppComponent {}
+export class AppComponent {
+}

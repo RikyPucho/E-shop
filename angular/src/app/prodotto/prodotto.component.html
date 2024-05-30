@@ -1,3 +1,6 @@
+<div class="cart">
+    <i class="fa fa-shopping-cart" style="position: fixed; right: 1vw; top: 5.5vh; z-index: 1; font-size: 2em; cursor: pointer;" routerLink="/carrello"></i>
+</div>
 <div class="todo">
     <div class="Prodotto">
         <div class="lat">
@@ -27,7 +30,7 @@
             <div class="numProd">
                 <button (click)="ChangeNum(numProd-1)">-</button><p>{{numProd}}</p><button (click)="ChangeNum(numProd+1)">+</button>
             </div>
-            <button class="btn" style="background-color: white;">Aggiungi al carrello</button>
+            <button class="btn" style="background-color: white;" (click)="AddCarrello()">Aggiungi al carrello</button>
         </div>
     </div>
 </div>

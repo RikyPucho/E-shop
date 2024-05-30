@@ -1,0 +1,63 @@
+.Prod{
+    display: flex;
+    flex-direction: row;
+    // justify-content: center;
+    background-color: lightgray;
+    border-radius: 20px;
+    margin: 5vh 5vw;
+    height: 50vh;
+    width: 50vw;
+}
+.img{
+    width: 16vw;
+    height: 40vh;
+    object-fit: cover;
+    margin: 5vh 2vw;
+    border-radius: 10px;
+}
+.cont{
+    margin: 5vh 3vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.numProd{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    background-color: white;
+    width: max(3.5vw);
+    height: max(21px);
+    justify-content: space-between;
+    margin:0 0 2vh 0;
+}
+.numProd button{
+    width: 22px;
+    height: 22px;
+    background-color: black;
+    color: white;
+    margin: 0;
+    text-align: center;
+    border: 0;
+}
+.cestino{
+    color: red;
+    margin: 1vh 1vw auto auto;
+    text-align: right;
+    width: 2vw;
+}
+.carrello{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    color: black;
+}
+.tot{
+    margin: 5vh auto 5vh 0;
+    position:fixed;
+    right: 3vw;
+    background-color: lightgray;
+    width: 20vw;
+    height: fit-content;
+    border-radius: 20px;
+}

@@ -1,0 +1,15 @@
+using System;
+using System.ComponentModel.DataAnnotations;
+
+namespace Eshop.Carrelli;
+
+public class UpdateCarrelloDto
+{
+    public string UserId { get; set; }
+    [Required]
+    public int NumDif {get; set;}
+
+    public string[] ProdottiNames { get; set; }
+    public int[] ProdottiNum { get; set; }
+
+}

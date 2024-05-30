@@ -16,19 +16,27 @@ function configureRoutes(routesService: RoutesService) {
         layout: eLayoutType.application,
       },
       {
-        path: '/def-prodotti',
-        name: 'Definizione prodotti',
-        iconClass: 'fas fa-',
+        path: '/carrello',
+        name: 'Carrello',
+        iconClass: 'fas fa-shopping-cart',
         order: 2,
         layout: eLayoutType.application,
-        requiredPolicy: 'Eshop.Prodotti'
+        requiredPolicy: 'Eshop.Carrelli'
       },
       {
         path: '/prodotti',
         name: 'Prodotti',
-        iconClass: 'fas fa-',
+        iconClass: 'fas fa-tag',
         order: 3,
         layout: eLayoutType.application,
+      },
+      {
+        path: '/def-prodotti',
+        name: 'Definizione prodotti',
+        iconClass: 'fas fa-plus',
+        order: 4,
+        layout: eLayoutType.application,
+        requiredPolicy: 'Eshop.Prodotti'
       },
     ]);
   };
