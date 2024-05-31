@@ -1,5 +1,5 @@
 import { Component, DoCheck, OnInit } from '@angular/core';
-import { ConfigStateService, ListService, PagedResultDto } from '@abp/ng.core';
+import { AuthService, ConfigStateService, ListService, PagedResultDto } from '@abp/ng.core';
 import { ProdottoService, ProdottoDto } from '@proxy/prodotti';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ConfirmationService, Confirmation, ToasterService } from '@abp/ng.theme.shared';
@@ -34,7 +34,8 @@ export class ProdottoComponent implements OnInit, DoCheck {
     private controlService: ControlliCarrelloService,
     private carrelloService: CarrelloService,
     private router: Router,
-    private toaster: ToasterService
+    private toaster: ToasterService,
+    private authService: AuthService
   ) {}
 
   ListaProva: any;
@@ -123,14 +124,19 @@ export class ProdottoComponent implements OnInit, DoCheck {
     this.immag = num;
     this.RicaricaFoto();
   }
+  GoUp(){
+    scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  }
   immag: number;
   numProd: number;
   CarrelloId: string;
   ngOnInit(): void {
     this.altroGiro =true;
-    this.config.getOne$("currentUser").subscribe(async currentUser => {
-      this.controlService.controlloCarrello(currentUser.id);
-    })
+    if(this.authService.isAuthenticated){
+      this.config.getOne$("currentUser").subscribe(async currentUser => {
+        this.controlService.controlloCarrello(currentUser.id);
+      })
+    }
     this.numProd = 1
     this.immag = 1
     this.route.paramMap.subscribe((param: ParamMap)=>{
@@ -160,7 +166,6 @@ export class ProdottoComponent implements OnInit, DoCheck {
     }
     this.selectedCarrello.prodottiNames.push(this.selectedProdotto.id);
     this.selectedCarrello.prodottiNum.push(this.numProd);
-    console.log(this.selectedCarrello)
     this.carrelloService.update(this.selectedCarrello.id, {userId:this.selectedCarrello.userId, numDif:this.selectedCarrello.numDif, prodottiNames: this.selectedCarrello.prodottiNames, prodottiNum: this.selectedCarrello.prodottiNum}).subscribe(()=>{
       this.toaster.success(this.numProd +(this.numProd == 1 ? ' prodotto: ': ' prodotti: ')+'"'+ this.selectedProdotto.nome+ (this.numProd == 1 ? '" aggiunto': '" aggiunti')+' al carrello', 'Carrello')
       // this.confirmation.info(this.numProd +(this.numProd == 1 ? ' prodotto: ': ' prodotti: ')+'"'+ this.selectedProdotto.nome+ (this.numProd == 1 ? '" aggiunto': '" aggiunti')+' al carrello', 'Carrello', this.option).subscribe(status=>{

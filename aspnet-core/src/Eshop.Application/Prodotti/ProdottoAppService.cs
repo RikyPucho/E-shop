@@ -9,7 +9,6 @@ using Volo.Abp.Domain.Repositories;
 
 namespace Eshop.Prodotti;
 
-[Authorize(EshopPermissions.Prodotti.Default)]
 public class ProdottoAppService : EshopAppService, IProdottoAppService
 {
     private readonly IProdottoRepository _prodottoRepository;
@@ -39,14 +38,16 @@ public class ProdottoAppService : EshopAppService, IProdottoAppService
         var prodotti = await _prodottoRepository.GetListAsync(
             input.SkipCount,
             input.MaxResultCount,
-            input.Sorting,
-            input.Filter
+            input.Sorting
         );
+        
+        prodotti = prodotti
+                        .WhereIf(!input.Nome.IsNullOrWhiteSpace(), X=> X.Nome.Contains(input.Nome))
+                        .WhereIf(input.Prezzo.HasValue && input.Maggiore == true, x=> x.Prezzo > input.Prezzo)
+                        .WhereIf(input.Prezzo.HasValue && input.Maggiore == false, x=> x.Prezzo < input.Prezzo)
+                        .ToList();
 
-        var totalCount = input.Filter == null
-            ? await _prodottoRepository.CountAsync()
-            : await _prodottoRepository.CountAsync(
-                prodotto => prodotto.Nome.Contains(input.Filter));
+        var totalCount = prodotti.Count();
 
         return new PagedResultDto<ProdottoDto>(
             totalCount,

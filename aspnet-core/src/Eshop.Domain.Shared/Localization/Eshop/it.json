@@ -9,6 +9,11 @@
     "Permission:Prodotti": "Prodotto Management",
     "Permission:Prodotti.Create": "Creare Prodotti",
     "Permission:Prodotti.Edit": "Modificare Prodotti",
-    "Permission:Prodotti.Delete": "Eliminare Prodotti"
+    "Permission:Prodotti.Delete": "Eliminare Prodotti",
+
+    "Enum:Stati.0": "Nuovo",
+    "Enum:Stati.1": "In corso",
+    "Enum:Stati.2": "Spedito",
+    "Enum:Stati.3": "Concluso"
   }
 }

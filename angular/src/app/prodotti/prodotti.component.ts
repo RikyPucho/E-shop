@@ -1,5 +1,5 @@
 import { Component, DoCheck, OnInit } from '@angular/core';
-import { ConfigStateService, ListService, PagedResultDto } from '@abp/ng.core';
+import { AuthService, ConfigStateService, ListService, PagedResultDto } from '@abp/ng.core';
 import { ProdottoService, ProdottoDto } from '@proxy/prodotti';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ConfirmationService, Confirmation } from '@abp/ng.theme.shared';
@@ -27,7 +27,8 @@ export class ProdottiComponent implements  OnInit, DoCheck {
     private confirmation: ConfirmationService,
     private immagineService: ImmaginiService,
     private config: ConfigStateService,
-    private controlService: ControlliCarrelloService
+    private controlService: ControlliCarrelloService,
+    private authService: AuthService
   ) {}
 
   ListaProva: any;
@@ -71,9 +72,11 @@ export class ProdottiComponent implements  OnInit, DoCheck {
     }
   }
   ngOnInit(): void {
-    this.config.getOne$("currentUser").subscribe(currentUser => {
-      this.controlService.controlloCarrello(currentUser.id)
-   })
+    if(this.authService.isAuthenticated){
+      this.config.getOne$("currentUser").subscribe(currentUser => {
+        this.controlService.controlloCarrello(currentUser.id)
+      })
+    }
     const prodottoStreamCreator = (query) => this.prodottoService.getList(query);
 
     this.list.hookToQuery(prodottoStreamCreator).subscribe((response) => {

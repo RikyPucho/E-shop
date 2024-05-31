@@ -7,5 +7,10 @@ namespace Eshop.Ordini
 {
     public class OrdineGeyListInput : PagedAndSortedResultRequestDto
     {
+        public Stati? Stato { get; set; }
+        public string? Nome { get; set; }
+        public float? Prezzo { get; set; }
+        public bool? Maggiore { get; set; }
+        public string? Citta { get; set; }
     }
 }

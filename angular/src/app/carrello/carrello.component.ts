@@ -16,12 +16,12 @@ import { OrdineCarrelloService } from 'src/service/ordine-carrello.service';
   providers :[ ListService]
 })
 export class CarrelloComponent implements OnInit, DoCheck{
-
+  
   selectedCarrello = {} as CarrelloDto
   prodotti=[];
   ListaProva = [];
   formCarrello: FormGroup
-
+  
   constructor(
     public readonly list: ListService,
     private prodottoService: ProdottoService,
@@ -64,6 +64,7 @@ export class CarrelloComponent implements OnInit, DoCheck{
   }
   ngOnInit(): void {
     this.getCarUser();
+    this.isOrdinabile= true;
   }
   buildForm(){
     this.formCarrello = this.fb.group({
@@ -87,7 +88,8 @@ export class CarrelloComponent implements OnInit, DoCheck{
   }
   ChangeNum(num: number, ind:number){
     this.selectedCarrello.prodottiNum[ind] = num;
-    this.calcolaTot()
+    this.calcolaTot();
+    this.Salva();
   }
   deleteProd(ind : number){
     this.selectedCarrello.prodottiNames.splice(ind, 1)
@@ -103,15 +105,25 @@ export class CarrelloComponent implements OnInit, DoCheck{
     this.Salva()
   }
   Salva(){
+    for(var i = 0; i < this.selectedCarrello.prodottiNames.length; i++){
+      this.selectedCarrello.prodottiNames[i] = this.selectedCarrello.prodottiNames[i].toLowerCase()
+    }
     this.carrelloService.update(this.selectedCarrello.id, {userId: this.selectedCarrello.userId, numDif: this.selectedCarrello.numDif, prodottiNames: this.selectedCarrello.prodottiNames, prodottiNum: this.selectedCarrello.prodottiNum}).subscribe(()=>{
       this.getCarUser();
     })
   }
   tot:number;
+  isOrdinabile = true;
   calcolaTot(){
     this.tot = 0;
     for(var i = 0; i < this.selectedCarrello.prodottiPrezzi.length; i++){
       this.tot +=this.selectedCarrello.prodottiPrezzi[i] * this.selectedCarrello.prodottiNum[i]
+    }
+    if(this.tot == 0){
+      this.isOrdinabile =false;
+    }
+    else{
+      this.isOrdinabile=true;
     }
   }
   ordine(){

@@ -30,7 +30,8 @@ const routes: Routes = [
   { path: 'prodotti', loadChildren: () => import('./prodotti/prodotti.module').then(m => m.ProdottiModule)},
   {path: 'prodotti/:id', loadChildren: () => import('./prodotto/prodotto.module').then(m => m.ProdottoModule)},
   { path: 'carrello', loadChildren: () => import('./carrello/carrello.module').then(m => m.CarrelloModule) },
-  { path: 'ordine', loadChildren: () => import('./ordine/ordine.module').then(m => m.OrdineModule) }
+  { path: 'ordine', loadChildren: () => import('./ordine/ordine.module').then(m => m.OrdineModule) },
+  { path: 'ordini', loadChildren: () => import('./ordini-table/ordini-table.module').then(m => m.OrdiniTableModule) }
 ];
 
 @NgModule({

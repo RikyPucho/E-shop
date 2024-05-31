@@ -4,5 +4,7 @@ namespace Eshop.Prodotti;
 
 public class GetProdottoListDto : PagedAndSortedResultRequestDto
 {
-    public string? Filter { get; set; }
+    public string? Nome {  get; set; }
+    public float? Prezzo { get; set; }
+    public bool? Maggiore { get; set; }
 }

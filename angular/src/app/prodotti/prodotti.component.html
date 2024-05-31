@@ -2,7 +2,7 @@
     <i class="fa fa-shopping-cart" style="position: fixed; right: 1vw; top: 5.5vh; z-index: 1; font-size: 2em; cursor: pointer;" routerLink="/carrello"></i>
 </div>
 
-<h2 style="margin: 2vh 16vw; font-size: 3em; color: black;">
+<h2 style="margin: 2vh 5vw; font-size: 3em; color: black;">
     Prodotti
 </h2>
 <div class="carte">
@@ -16,7 +16,7 @@
             </div>
             <div class="card-body">
                 <h3>{{prodotto.nome}}</h3>
-                <h5>{{prodotto.prezzo | currency:'EUR': true}}</h5>
+                <h5>{{prodotto.prezzo | currency:'EUR'}}</h5>
                 <p>{{prodotto.des}}</p>
             </div>
         </div>

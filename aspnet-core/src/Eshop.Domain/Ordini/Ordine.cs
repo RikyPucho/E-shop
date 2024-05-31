@@ -28,7 +28,7 @@ namespace Eshop.Ordini
         {
         }
 
-        public Ordine(Guid id,string nome, string cognome, string telefono, string provincia, string indrizzo, string cap, string citta, float prezzo, Stati stato)
+        internal Ordine(Guid id,string nome, string cognome, string telefono, string provincia, string indrizzo, string cap, string citta, float prezzo, Stati stato)
         {
             Id = id;
             Nome = nome;
@@ -55,8 +55,7 @@ namespace Eshop.Ordini
 
             if(IsInProdotti(id))
             {
-                //return;
-                RemoveProdotti(id);
+                return;
             }
 
             Prodotti.Add(new OrdineProdotti(ordineId: Id, prodottoId: id, prodottoNum: num));

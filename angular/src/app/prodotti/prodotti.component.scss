@@ -1,17 +1,19 @@
 .carta{
     width: 17vw !important;
     border: 1px solid lightgray;
-    margin: min(5vh) min(8vw);
+    margin: min(5vh) auto;
 }
 .carta:hover .overlay{
     bottom: 0;
     height: 100%;
 }
 .carte{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
+    // display: flex;
+    // flex-direction: row;
+    // flex-wrap: wrap;
+    // justify-content: space-evenly;
+    display: grid;
+    grid-template-columns: auto auto auto;
 }
 .img{
     height: 405px;
