@@ -70,11 +70,7 @@ namespace Eshop.Ordini
 
             for (var i = 0; i < prodottiIds.LongCount(); i++)
             {
-                var inde = prodottiNames.FindIndex(x => x.Contains(prodottiIds[i].ToString()));
-                if (inde != -1)
-                {
-                    ordine.AddProdotti(prodottiIds[i], prodottiNum[inde]);
-                }
+                ordine.AddProdotti(prodottiIds[i], prodottiNum[i]);
             }
         }
     }

@@ -38,6 +38,14 @@ function configureRoutes(routesService: RoutesService) {
         layout: eLayoutType.application,
         requiredPolicy: 'Eshop.Prodotti'
       },
+      {
+        path: '/ordini',
+        name: 'Ordini',
+        iconClass: 'fas fa-list-alt',
+        order: 5,
+        layout: eLayoutType.application,
+        requiredPolicy: 'Eshop.Prodotti'
+      },
     ]);
   };
 }

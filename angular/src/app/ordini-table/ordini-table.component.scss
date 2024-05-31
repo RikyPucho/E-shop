@@ -1,0 +1,36 @@
+.nuovo, .inCorso, .spedito, .concluso{
+    border-radius: 10px;
+    border: 0;
+    color: white;
+    width: fit-content;
+}
+.nuovo{
+    background-color: blue;
+}
+.inCorso{
+    background-color: rgb(252, 193, 0);
+}
+.spedito{
+    background-color: rgb(114, 111, 111);
+}
+.concluso{
+    background-color: rgb(5, 151, 5);
+}
+.modal{
+    width: 7vw;
+    height: 2vh;
+}
+.btFil{
+    height: 4.8vh;
+    margin: auto 0 0 0;
+}
+.fil{
+    width: 25vw;
+}
+.filtri{
+    margin: 2vh 0 auto 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}

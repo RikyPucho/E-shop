@@ -35,14 +35,14 @@
     </div>
 </div>
 
-<h2 style="margin: 5vh 16vw 2vh; font-size: 3em; color: black;">
+<h2 style="margin: 5vh 5vw 2vh; font-size: 3em; color: black;">
     Altri prodotti
 </h2>
 <div class="carte">
     <ng-container *ngFor="let prodotto of prodotto.items;">
         <ng-container *ngIf="prodotto.id != selectedProdotto.id">
 
-            <div class="card carta" routerLink="/prodotti/{{prodotto.id}}" (click)="RicaricaFoto(); ChangeImg(1); ChangeNum(1)">
+            <div class="card carta" routerLink="/prodotti/{{prodotto.id}}" (click)="RicaricaFoto(); ChangeImg(1); ChangeNum(1); GoUp()">
                 <img src="" alt=""   name={{prodotto.immagine1}} class="img">
                 <div class="overlay">
                     <h3 class="testoOver">

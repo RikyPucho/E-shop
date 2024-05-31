@@ -40,7 +40,7 @@ export class OrdineService {
     this.restService.request<any, PagedResultDto<OrdineDto>>({
       method: 'GET',
       url: '/api/app/ordine',
-      params: { sorting: input.sorting, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
+      params: { stato: input.stato, nome: input.nome, prezzo: input.prezzo, maggiore: input.maggiore, citta: input.citta, sorting: input.sorting, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
     },
     { apiName: this.apiName,...config });
   

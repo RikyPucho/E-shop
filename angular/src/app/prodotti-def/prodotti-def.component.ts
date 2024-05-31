@@ -1,6 +1,6 @@
 import { Component, DoCheck, OnInit } from '@angular/core';
 import { ListService, PagedResultDto } from '@abp/ng.core';
-import { ProdottoService, ProdottoDto } from '@proxy/prodotti';
+import { ProdottoService, ProdottoDto, GetProdottoListDto } from '@proxy/prodotti';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ConfirmationService, Confirmation } from '@abp/ng.theme.shared';
 import { ImmaginiService } from '@proxy/controllers';
@@ -10,7 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
   selector: 'app-prodotti-def',
   templateUrl: './prodotti-def.component.html',
   styleUrl: './prodotti-def.component.scss',
-  providers: [ListService]
+  providers: [ListService<GetProdottoListDto>]
 })
 export class ProdottiDefComponent implements OnInit, DoCheck {
   prodotto = { items: [], totalCount: 0 } as PagedResultDto<ProdottoDto>;
@@ -18,6 +18,7 @@ export class ProdottiDefComponent implements OnInit, DoCheck {
   isModalOpen = false;
 
   form: FormGroup;
+  filtri: FormGroup;
 
   selectedProdotto = {} as ProdottoDto;
 
@@ -33,7 +34,6 @@ export class ProdottiDefComponent implements OnInit, DoCheck {
   onFileSelected(files: FileList) {
     var fileToUpload: File | null = null;
     var guid =  uuidv4()
-    console.log(guid)
     fileToUpload = files.item(0);
     this.uploadImg(guid, fileToUpload);
   } 
@@ -91,14 +91,28 @@ export class ProdottiDefComponent implements OnInit, DoCheck {
     }
   }
   ngOnInit(): void {
-    const prodottoStreamCreator = (query) => this.prodottoService.getList(query);
+    this.buildFiltri();
+    this.maggiore(true);
+    const prodottoStreamCreator = (query) => this.prodottoService.getList({...query, ...this.filtri.value});
 
     this.list.hookToQuery(prodottoStreamCreator).subscribe((response) => {
       this.prodotto = response;
     });
     this.RicaricaFoto();
   }
-
+  mag = ''
+  maggiore(val: boolean){
+    this.filtri.patchValue({maggiore: val});
+    this.mag = val==true?'Maggiore':'Minore';
+    this.list.get()
+  }
+  buildFiltri(){
+    this.filtri  = this.fb.group({
+      nome:[null],
+      maggiore:[null],
+      prezzo:[null]
+    })
+  }
   createProdotto() {
     this.idsImg = []
     this.selectedProdotto = {} as ProdottoDto;
@@ -119,7 +133,6 @@ export class ProdottiDefComponent implements OnInit, DoCheck {
       if(this.selectedProdotto.immagine3!=''){
         this.idsImg.push(this.selectedProdotto.immagine3)
       }
-      console.log(this.idsImg)
     });
   }
 

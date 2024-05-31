@@ -33,11 +33,7 @@ public class EfCoreProdottoRepository
         string filter = null)
     {
         var dbSet = await GetDbSetAsync();
-        return await dbSet
-            .WhereIf(
-                !filter.IsNullOrWhiteSpace(),
-                prodotto => prodotto.Nome.Contains(filter)
-                )
+        return await dbSet 
             .OrderBy(sorting)
             .Skip(skipCount)
             .Take(maxResultCount)

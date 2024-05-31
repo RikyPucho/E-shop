@@ -34,6 +34,11 @@ export interface OrdineDto extends EntityDto<string> {
 }
 
 export interface OrdineGeyListInput extends PagedAndSortedResultRequestDto {
+  stato?: Stati;
+  nome?: string;
+  prezzo?: number;
+  maggiore?: boolean;
+  citta?: string;
 }
 
 export interface UpdateOrdineDto {

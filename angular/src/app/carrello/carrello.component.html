@@ -9,9 +9,9 @@
                     <h2>{{selectedCarrello.prodottiNomi[i]}}</h2>
                     <h3>{{selectedCarrello.prodottiPrezzi[i] | currency:'EUR'}}</h3>
                     <div class="numProd">
-                        <button (click)="ChangeNum(selectedCarrello.prodottiNum[i]-1, i)">-</button><p>{{selectedCarrello.prodottiNum[i]}}</p><button (click)="ChangeNum(selectedCarrello.prodottiNum[i]+1, i)">+</button>
+                        <button (click)="ChangeNum(selectedCarrello.prodottiNum[i]-1, i,selectedCarrello.prodottiNames[i])">-</button><p>{{selectedCarrello.prodottiNum[i]}}</p><button (click)="ChangeNum(selectedCarrello.prodottiNum[i]+1, i, selectedCarrello.prodottiNames[i])">+</button>
                     </div>
-                    <button class="btn btn-light" style="width: 8vw;" (click)="modifica(i,selectedCarrello.prodottiNames[i], selectedCarrello.prodottiNum[i])">Salva modifiche</button>
+                    <!-- <button class="btn btn-light" style="width: 8vw;" (click)="modifica(i,selectedCarrello.prodottiNames[i], selectedCarrello.prodottiNum[i])">Salva modifiche</button> -->
                     <h4 style="margin-top: 3vh;">Totale: {{selectedCarrello.prodottiPrezzi[i] * selectedCarrello.prodottiNum[i] | currency:'EUR'}}</h4>
                 </div>
                 <div class="cestino">
@@ -27,7 +27,7 @@
                 <p>{{selectedCarrello.prodottiNomi[i]}} ({{selectedCarrello.prodottiPrezzi[i] | currency:'EUR'}}) * {{selectedCarrello.prodottiNum[i]}} = {{selectedCarrello.prodottiPrezzi[i] * selectedCarrello.prodottiNum[i] | currency:'EUR'}}</p>
             </ng-container>
             <h4>Totale carrello: {{tot | currency:'EUR'}}</h4>
-            <button class="btn btn-dark" style="margin-top: 2vh;" (click)="ordine()">Procedi all'ordine</button>
+            <button class="btn btn-dark" [disabled]="!isOrdinabile" style="margin-top: 2vh;" (click)="ordine()">Procedi all'ordine</button>
         </div>
     </div>
     

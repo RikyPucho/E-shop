@@ -10,7 +10,9 @@ export interface CreateProdottoDto {
 }
 
 export interface GetProdottoListDto extends PagedAndSortedResultRequestDto {
-  filter?: string;
+  nome?: string;
+  prezzo?: number;
+  maggiore?: boolean;
 }
 
 export interface ProdottoDto extends EntityDto<string> {

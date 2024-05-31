@@ -1,4 +1,4 @@
-import { ConfirmationService } from '@abp/ng.theme.shared';
+import { ConfirmationService, ToasterService } from '@abp/ng.theme.shared';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, MaxValidator, MinValidator, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -24,7 +24,8 @@ export class OrdineComponent  implements OnInit{
     private ordineSer: OrdineCarrelloService,
     private ordineService: OrdineService,
     private router: Router,
-    private carrelloServioce: CarrelloService
+    private carrelloServioce: CarrelloService,
+    private toaster: ToasterService
   ){}
 
 
@@ -37,7 +38,6 @@ export class OrdineComponent  implements OnInit{
     }
     this.carrelloId = this.ordineSer.carrelloId;
     this.userId = this.ordineSer.UserId;
-    console.log(this.carrelloId);
   }
 
   Create(){
@@ -62,8 +62,8 @@ export class OrdineComponent  implements OnInit{
     })
   }
   
+
   Save(){
-    console.log(this.form.value)
     if(this.form.invalid){
       return
     }
@@ -74,6 +74,7 @@ export class OrdineComponent  implements OnInit{
     } else{
       this.ordineService.create(this.form.value).subscribe(() =>{
         this.carrelloServioce.update(this.carrelloId, {userId: this.userId, numDif: 0, prodottiNames: [], prodottiNum: []}).subscribe(()=>{
+          this.toaster.success('Ordine inviato!', 'Ordine')
           this.form.reset();
           this.router.navigate(['/carrello'])
         })

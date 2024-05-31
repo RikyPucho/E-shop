@@ -39,7 +39,7 @@ export class ProdottoService {
     this.restService.request<any, PagedResultDto<ProdottoDto>>({
       method: 'GET',
       url: '/api/app/prodotto',
-      params: { filter: input.filter, sorting: input.sorting, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
+      params: { nome: input.nome, prezzo: input.prezzo, maggiore: input.maggiore, sorting: input.sorting, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
     },
     { apiName: this.apiName,...config });
   

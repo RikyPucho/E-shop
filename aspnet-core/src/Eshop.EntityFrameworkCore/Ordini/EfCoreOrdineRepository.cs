@@ -25,7 +25,7 @@ namespace Eshop.Ordini
             var query = await ApplyFilterAsync();
 
             return await query
-                .OrderBy(!string.IsNullOrWhiteSpace(sorting) ? sorting : "Nome ASC")
+                .OrderBy(!string.IsNullOrWhiteSpace(sorting) ? sorting : "Stato ASC")
                 .PageBy(skipCount, maxResultCount)
                 .ToListAsync();
         }

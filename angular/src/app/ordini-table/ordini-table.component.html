@@ -1,0 +1,195 @@
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            <div class="col col-md-6">
+                <h3 class="card-title">
+                    Ordini
+                </h3>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 3vh;">
+            <form [formGroup]="filtri">
+                <div style="display: flex; flex-direction: row; flex-wrap: nowrap; gap:1vw">
+                    <div class="form-group" style="width: 40vw;">
+                        <label for="">Cerca per nome o cognome</label>
+                        <input type="text" formControlName="nome" class="form-control">
+                    </div>
+                    <button class="btn btn-dark btFil" (click)="list.get();"><i class="fa fa-search"></i>&nbsp;Cerca</button>
+                    <button class="btn btn-dark btFil" (click)="filAvanzati()"><i class="fa fa-filter"></i>&nbsp; Filtri</button>
+                    <button class="btn btn-dark btFil" (click)="filtri.reset(); list.get()"><i class="fa fa-times"></i>&nbsp;Togli filtri</button>
+                </div>
+                <div class="filtri" *ngIf="isAvanzati">
+                    <div class="form-group fil">
+                        <label for="">Cerca per città</label>
+                        <input type="text" formControlName="citta" class="form-control">
+                    </div>
+                    <div class="form-group fil">
+                        <label for="">Stato</label>
+                        <select formControlName="stato" class="form-select">
+                            <option [ngValue]="null">Seleziona lo stato</option>
+                            <option [ngValue]="stato.value" *ngFor="let stato of stati">{{'::Enum:Stati.'+stato.value | abpLocalization}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group fil">
+                        <label for="">Prezzo</label>&nbsp; &nbsp; &nbsp;
+                        <div style="display: flex;">
+                            <button (click)="maggiore(!filtri.get('maggiore').value)" class="btn btn-secondary">{{mag}}</button>
+                            <input class="form-control" type="number" formControlName="prezzo">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="card-body">
+        <ngx-datatable [rows]="ordini.items" [count]="ordini.totalCount" [list]="list" [limit]="5" default>
+            <ngx-datatable-column [name]="'Azioni'" [maxWidth]="150" [sortable]="false">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    <div ngbDropdown container="body" class="d-inline-block">
+                        <button 
+                        class="btn btn-dark btn-sm dropdown-toggle"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        ngbDropdownToggle>
+                            <i class="fa fa-cog me-1"></i>Azioni
+                        </button>
+                        <div ngbDropdownMenu>
+                            <button ngbDropdownItem (click)="edit(row.id)">
+                              Modifica
+                            </button>
+                            <button ngbDropdownItem (click)="delete(row.id)">
+                              Elimina
+                            </button>
+                          </div>
+                    </div>
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column [name]="'Stato'" prop="stato">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    <button [ngClass]="row.stato == 0 ? 'nuovo' : row.stato == 1 ? 'inCorso' : row.stato == 2 ? 'spedito' : 'concluso'" (click)="clickStato(row.id)">{{'::Enum:Stati.'+row.stato | abpLocalization}}</button>
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column [name]="'Nome'" prop="nome"></ngx-datatable-column>
+            <ngx-datatable-column [name]="'Cognome'" prop="cognome"></ngx-datatable-column>
+            <ngx-datatable-column [name]="'Prodotti'" prop="prodottiNomi">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    <ng-container *ngFor="let prdotto of row.prodottiNum; index as i">
+                        <p>{{row.prodottiNomi[i]}}</p>
+                    </ng-container>
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column [name]="'Numero prodotti'" prop="prodottiNomi">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    <ng-container *ngFor="let prdotto of row.prodottiNum; index as i">
+                        <p>{{row.prodottiNum[i]}}</p>
+                    </ng-container>
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column [name]="'Prezzo per prodotto'" prop="prodottiNomi">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    <ng-container *ngFor="let prdotto of row.prodottiNum; index as i">
+                        <p>{{row.prodottiPrezzi[i] | currency:'EUR'}}</p>
+                    </ng-container>
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column [name]="'prezzo totale'" prop="prezzo">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.prezzo | currency:'EUR'}}
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column [name]="'citta'" prop="citta"></ngx-datatable-column>
+            <ngx-datatable-column [name]="'provincia'" prop="provincia"></ngx-datatable-column>
+            <ngx-datatable-column [name]="'cap'" prop="cap"></ngx-datatable-column>
+            <ngx-datatable-column [name]="'indrizzo'" prop="indrizzo"></ngx-datatable-column>
+            <ngx-datatable-column [name]="'Telefono'" prop="telefono"></ngx-datatable-column>
+        </ngx-datatable>
+    </div>
+
+</div>
+
+<abp-modal [(visible)]="isModalOpen">
+    <ng-template #abpHeader>
+        <h3>Modifica ordine di {{selectedOrdine.nome}} {{selectedOrdine.cognome}}</h3>
+    </ng-template>
+    <ng-template #abpBody>
+        <form [formGroup]="form">
+
+            <div class="form-group">
+                <label for="stato">Stato</label>
+                <select name="" id="" formControlName="stato" class="form-select">
+                    <option [ngValue]="null">Seleziona lo stato</option>
+                    <option [ngValue]="stato.value" *ngFor="let stato of stati">{{'::Enum:Stati.'+stato.value | abpLocalization}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="nome">Nome</label>
+                <input type="text" [(ngModel)]="selectedOrdine.nome" disabled class="form-control" [ngModelOptions]="{standalone: true}">
+            </div>
+            <div class="form-group">
+                <label for="cognome">Cognome</label>
+                <input type="text" formControlName="cognome" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="telefono">Telefono</label>
+                <input type="text" formControlName="telefono" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="provincia">Provincia</label>
+                <input type="text" formControlName="provincia" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="indrizzo">Indirizzo</label>
+                <input type="text" formControlName="indrizzo" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="cap">CAP</label>
+                <input type="text" formControlName="cap" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="citta">Citta</label>
+                <input type="text" formControlName="citta" class="form-control">
+            </div>
+            <h4 style="color: black; margin: 2vh auto auto auto;">
+                Prodotti ordinati:
+            </h4>
+            <ng-conteiner *ngFor="let pro of selectedOrdine.prodottiNomi; index as i">
+                <div class="form-group" style="color: black; margin-top: 2vh;">
+                    <p><b>{{selectedOrdine.prodottiNomi[i]}}</b>:   {{selectedOrdine.prodottiNum[i]}} * {{selectedOrdine.prodottiPrezzi[i] | currency:'EUR'}} = {{selectedOrdine.prodottiNum[i] * selectedOrdine.prodottiPrezzi[i] | currency:'EUR'}}</p>
+                </div>
+            </ng-conteiner>
+            <div class="form-group">
+                <label for="nome">Prezzo</label>
+                <input type="text" [(ngModel)]="selectedOrdine.prezzo" class="form-control" disabled [ngModelOptions]="{standalone: true}">
+            </div>
+        </form>
+    </ng-template>
+    <ng-template #abpFooter>
+        <button type="button" class="btn btn-secondary" abpClose>
+            {{ '::Close' | abpLocalization }}
+          </button>
+      
+          <button class="btn btn-primary" (click)="save()" >
+            <i class="fa fa-check mr-1"></i>
+            {{ '::Save' | abpLocalization }}
+          </button>
+    </ng-template>
+</abp-modal>
+
+<abp-modal [(visible)]="isModalStato">
+    <ng-template #abpHeader>
+        <h3>
+            Modifica lo stato dell'ordine
+        </h3>
+    </ng-template>
+    <ng-template #abpBody>
+        <div style="text-align: center; color: black;">
+            <i class="fa fa-balance-scale" style="font-size: 10em; margin: 1vh auto;"></i>
+            <p style="font-size: 2em;">Come vuoi impostare lo stato dell'ordine?</p>
+        </div>
+    </ng-template>
+    <ng-template #abpFooter>
+        <button class="btn inCorso" (click)="changeStato(1)">In corso</button>
+        <button class="btn spedito" (click)="changeStato(2)">Spedito</button>
+        <button class="btn concluso" (click)="changeStato(3)">Concluso</button>
+    </ng-template>
+</abp-modal>
