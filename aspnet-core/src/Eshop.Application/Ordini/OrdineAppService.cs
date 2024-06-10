@@ -29,8 +29,8 @@ namespace Eshop.Ordini
                         .WhereIf(!input.Nome.IsNullOrWhiteSpace(), x => x.Nome.Contains(input.Nome) || x.Cognome.Contains(input.Nome))
                         .WhereIf(!input.Citta.IsNullOrWhiteSpace(), x => x.Citta.Contains(input.Citta))
                         .WhereIf(input.Stato.HasValue, x => x.Stato == input.Stato)
-                        .WhereIf(input.Prezzo.HasValue && input.Maggiore == true, x => x.Prezzo > input.Prezzo)
-                        .WhereIf(input.Prezzo.HasValue && input.Maggiore == false, x => x.Prezzo < input.Prezzo)
+                        .WhereIf(input.Prezzo.HasValue && input.Maggiore == true, x => x.Prezzo >= input.Prezzo)
+                        .WhereIf(input.Prezzo.HasValue && input.Maggiore == false, x => x.Prezzo <= input.Prezzo)
                         .ToList();
 
             return new PagedResultDto<OrdineDto>(totalCount, ObjectMapper.Map<List<OrdineWithDetails>, List<OrdineDto>>(ordini));

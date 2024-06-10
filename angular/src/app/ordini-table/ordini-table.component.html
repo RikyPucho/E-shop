@@ -16,7 +16,7 @@
                     </div>
                     <button class="btn btn-dark btFil" (click)="list.get();"><i class="fa fa-search"></i>&nbsp;Cerca</button>
                     <button class="btn btn-dark btFil" (click)="filAvanzati()"><i class="fa fa-filter"></i>&nbsp; Filtri</button>
-                    <button class="btn btn-dark btFil" (click)="filtri.reset(); list.get()"><i class="fa fa-times"></i>&nbsp;Togli filtri</button>
+                    <button class="btn btn-danger btFil" (click)="filtri.reset(); list.get()"><i class="fa fa-times"></i>&nbsp;Togli filtri</button>
                 </div>
                 <div class="filtri" *ngIf="isAvanzati">
                     <div class="form-group fil">

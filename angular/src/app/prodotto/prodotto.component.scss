@@ -24,7 +24,8 @@
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    width: 20vw;
+    width: max(25vw);
+    height: max(40vh);
     overflow: auto;
     margin: 2vw 0;
 }
@@ -35,8 +36,6 @@
     color: black;
 }
 .imgProd{
-    width: 16vw;
-    height: 40vh;
     object-fit: cover;
     margin: 0 0.5vw;
     border-radius: 10px;
@@ -45,6 +44,7 @@
     width: 17vw !important;
     border: 1px solid lightgray;
     margin: min(5vh) min(5vw);
+    border-radius: 10px;
 }
 .carta:hover .overlay{
     bottom: 0;
@@ -61,6 +61,8 @@
 .img{
     height: 405px;
     object-fit: cover;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 .overlay{
     position: absolute;
@@ -71,6 +73,7 @@
     overflow: hidden;
     width: 100%;
     cursor: pointer;
+    border-radius: 10px;
     height: 0;
     transition: .5s ease;
 }
@@ -93,7 +96,7 @@
     width: max(3.5vw);
     height: max(21px);
     justify-content: space-between;
-    margin:0 0 0.5vw auto;
+    margin:0 0.1px 0.5vw auto;
 }
 .numProd button{
     width: 22px;

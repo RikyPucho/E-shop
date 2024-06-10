@@ -43,8 +43,8 @@ public class ProdottoAppService : EshopAppService, IProdottoAppService
         
         prodotti = prodotti
                         .WhereIf(!input.Nome.IsNullOrWhiteSpace(), X=> X.Nome.Contains(input.Nome))
-                        .WhereIf(input.Prezzo.HasValue && input.Maggiore == true, x=> x.Prezzo > input.Prezzo)
-                        .WhereIf(input.Prezzo.HasValue && input.Maggiore == false, x=> x.Prezzo < input.Prezzo)
+                        .WhereIf(input.Prezzo.HasValue && input.Maggiore == true, x=> x.Prezzo >= input.Prezzo)
+                        .WhereIf(input.Prezzo.HasValue && input.Maggiore == false, x=> x.Prezzo <= input.Prezzo)
                         .ToList();
 
         var totalCount = prodotti.Count();
