@@ -1,6 +1,7 @@
 .carta{
     width: 17vw !important;
     border: 1px solid lightgray;
+    border-radius: 10px;
     margin: min(5vh) auto;
 }
 .carta:hover .overlay{
@@ -17,6 +18,8 @@
 }
 .img{
     height: 405px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
     object-fit: cover;
 }
 .overlay{
@@ -30,6 +33,7 @@
     cursor: pointer;
     height: 0;
     transition: .5s ease;
+    border-radius: 10px;
 }
 .testoOver{
     white-space: nowrap; 
